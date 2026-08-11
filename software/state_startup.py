@@ -1,8 +1,27 @@
 import time
 from rainbowio import colorwheel
-from setup import pixels, NUM_PIXELS
+from setup import pixels, NUM_PIXELS, BACKLIGHT_START, BLE_UART_AVAILABLE
 from setup import keys
 from state import State
+from typer import ble_typer
+
+
+def _boot_status_flash():
+    """One-shot Bluetooth status cue on the backlight ring, then hand off.
+
+    green = Friend detected & HID enabled, red = module absent/unresponsive.
+    Skipped entirely when the BLE SAO is disabled (USE_BLE_SAO = False).
+    """
+    if not BLE_UART_AVAILABLE:
+        return
+    color = (0, 40, 0) if ble_typer.ble_ready else (40, 0, 0)
+    pixels.fill((0, 0, 0))
+    for i in range(BACKLIGHT_START, NUM_PIXELS):
+        pixels[i] = color
+    pixels.show()
+    time.sleep(0.5)
+    pixels.fill((0, 0, 0))
+    pixels.show()
 
 # Diagonal sweep groups: LEDs lit per phase, top-left → bottom-right
 # Key LED diagonal = row + col for LED index i: row = i//3, col = i%3
@@ -36,6 +55,7 @@ class StartupState(State):
         self.stage = "sweep"   # "sweep" | "hold" | "fade"
 
     def enter(self, machine):
+        _boot_status_flash()
         self.phase = 0
         self.phase_start = time.monotonic()
         self.base_hue = 0

@@ -1,0 +1,1418 @@
+(kicad_sch
+	(version 20260306)
+	(generator "eeschema")
+	(generator_version "10.0")
+	(uuid "f5c6faef-dfa7-47a6-a960-5542f5f53414")
+	(paper "USLetter")
+	(title_block
+		(title "MK9 BLE nRF52 SAO (Raytac MDBT42Q)")
+		(date "2026-08-11")
+		(rev "1.0")
+		(company "DCZia")
+	)
+	(lib_symbols
+		(symbol "mk9_ble:MDBT42Q"
+			(pin_names (offset 1.016))
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "U"
+				(at -7.62 -2.54 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects (font (size 1.27 1.27))))
+			(property "Value" "MDBT42Q"
+				(at 0 7.62 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects (font (size 1.27 1.27))))
+			(property "Footprint" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects (font (size 1.27 1.27))))
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects (font (size 1.27 1.27))))
+			(property "Description" "Raytac MDBT42Q nRF52832 BLE module (Adafruit #4077)"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects (font (size 1.27 1.27))))
+			(symbol "MDBT42Q_0_1"
+				(rectangle
+					(start -7.62 10.16)
+					(end 7.62 -5.08)
+					(stroke (width 0.254)(type default))
+					(fill (type background)))
+			)
+			(symbol "MDBT42Q_1_1"
+			(pin power_in line
+				(at -12.7 7.62 0)
+				(length 5.08)
+				(name "VDD"
+					(effects (font (size 1.27 1.27))))
+				(number "1"
+					(effects (font (size 1.27 1.27)))))
+			(pin power_in line
+				(at -12.7 5.08 0)
+				(length 5.08)
+				(name "GND"
+					(effects (font (size 1.27 1.27))))
+				(number "2"
+					(effects (font (size 1.27 1.27)))))
+			(pin bidirectional line
+				(at -12.7 2.54 0)
+				(length 5.08)
+				(name "SWDIO"
+					(effects (font (size 1.27 1.27))))
+				(number "3"
+					(effects (font (size 1.27 1.27)))))
+			(pin input line
+				(at -12.7 0 0)
+				(length 5.08)
+				(name "SWDCLK"
+					(effects (font (size 1.27 1.27))))
+				(number "4"
+					(effects (font (size 1.27 1.27)))))
+			(pin input line
+				(at -12.7 -2.54 0)
+				(length 5.08)
+				(name "RESET"
+					(effects (font (size 1.27 1.27))))
+				(number "5"
+					(effects (font (size 1.27 1.27)))))
+			(pin output line
+				(at 12.7 7.62 180)
+				(length 5.08)
+				(name "TX_P0.06"
+					(effects (font (size 1.27 1.27))))
+				(number "6"
+					(effects (font (size 1.27 1.27)))))
+			(pin input line
+				(at 12.7 5.08 180)
+				(length 5.08)
+				(name "RX_P0.08"
+					(effects (font (size 1.27 1.27))))
+				(number "7"
+					(effects (font (size 1.27 1.27)))))
+			)
+			(embedded_fonts no)
+		)
+		(symbol "badgelife_shitty_addon_v169bis:Badgelife_sao_connector_v169bis"
+			(pin_names
+				(offset 1.016)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "X"
+				(at -7.112 8.382 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "Badgelife_sao_connector_v169bis"
+				(at 0 6.35 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 5.08 0 90)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" ""
+				(at 5.08 0 90)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "Badgelife_sao_connector_v169bis_0_1"
+				(rectangle
+					(start 7.62 5.08)
+					(end -7.62 -5.08)
+					(stroke
+						(width 0)
+						(type solid)
+					)
+					(fill
+						(type background)
+					)
+				)
+			)
+			(symbol "Badgelife_sao_connector_v169bis_1_1"
+				(pin input line
+					(at 12.7 2.54 180)
+					(length 5.08)
+					(name "VCC"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin input line
+					(at -12.7 2.54 0)
+					(length 5.08)
+					(name "GND"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin input line
+					(at 12.7 0 180)
+					(length 5.08)
+					(name "SDA"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin input line
+					(at -12.7 0 0)
+					(length 5.08)
+					(name "SCL"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin input line
+					(at 12.7 -2.54 180)
+					(length 5.08)
+					(name "GPIO1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "5"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin input line
+					(at -12.7 -2.54 0)
+					(length 5.08)
+					(name "GPIO2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "6"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)		(symbol "Device:C"
+			(pin_names (offset 0.254))
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "C"
+				(at 0.635 2.54 0)
+				(show_name no)(do_not_autoplace no)
+				(effects (font (size 1.27 1.27))(justify left)))
+			(property "Value" "C"
+				(at 0.635 -2.54 0)
+				(show_name no)(do_not_autoplace no)
+				(effects (font (size 1.27 1.27))(justify left)))
+			(property "Footprint" ""
+				(at 0 0 0)(show_name no)(do_not_autoplace no)(hide yes)
+				(effects (font (size 1.27 1.27))))
+			(property "Datasheet" ""
+				(at 0 0 0)(show_name no)(do_not_autoplace no)(hide yes)
+				(effects (font (size 1.27 1.27))))
+			(property "Description" "Unpolarized capacitor"
+				(at 0 0 0)(show_name no)(do_not_autoplace no)(hide yes)
+				(effects (font (size 1.27 1.27))))
+			(symbol "C_0_1"
+				(polyline
+					(pts (xy -2.032 -0.762)(xy 2.032 -0.762))
+					(stroke (width 0.508)(type default))(fill (type none)))
+				(polyline
+					(pts (xy -2.032 0.762)(xy 2.032 0.762))
+					(stroke (width 0.508)(type default))(fill (type none))))
+			(symbol "C_1_1"
+				(pin passive line
+					(at 0 3.81 270)
+					(length 2.794)
+					(name "~"(effects (font (size 1.27 1.27))))
+					(number "1"(effects (font (size 1.27 1.27)))))
+				(pin passive line
+					(at 0 -3.81 90)
+					(length 2.794)
+					(name "~"(effects (font (size 1.27 1.27))))
+					(number "2"(effects (font (size 1.27 1.27))))))
+			(embedded_fonts no)
+		)
+		(symbol "Connector_Generic:Conn_01x05"
+			(pin_names (offset 1.016))
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "J"
+				(at -1.27 -3.81 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects (font (size 1.27 1.27))))
+			(property "Value" "Conn_01x05"
+				(at 0 3.81 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects (font (size 1.27 1.27))))
+			(property "Footprint" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects (font (size 1.27 1.27))))
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects (font (size 1.27 1.27))))
+			(property "Description" "Generic connector, single row, 01x05"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects (font (size 1.27 1.27))))
+			(symbol "Conn_01x05_0_1"
+				(rectangle
+					(start -1.27 6.35)
+					(end 1.27 -6.35)
+					(stroke (width 0.254)(type default))
+					(fill (type background)))
+			)
+			(symbol "Conn_01x05_1_1"
+			(pin passive line
+				(at -5.08 5.08 0)
+				(length 3.81)
+				(name "Pin_1"
+					(effects (font (size 1.27 1.27))))
+				(number "1"
+					(effects (font (size 1.27 1.27)))))
+			(pin passive line
+				(at -5.08 2.54 0)
+				(length 3.81)
+				(name "Pin_2"
+					(effects (font (size 1.27 1.27))))
+				(number "2"
+					(effects (font (size 1.27 1.27)))))
+			(pin passive line
+				(at -5.08 0 0)
+				(length 3.81)
+				(name "Pin_3"
+					(effects (font (size 1.27 1.27))))
+				(number "3"
+					(effects (font (size 1.27 1.27)))))
+			(pin passive line
+				(at -5.08 -2.54 0)
+				(length 3.81)
+				(name "Pin_4"
+					(effects (font (size 1.27 1.27))))
+				(number "4"
+					(effects (font (size 1.27 1.27)))))
+			(pin passive line
+				(at -5.08 -5.08 0)
+				(length 3.81)
+				(name "Pin_5"
+					(effects (font (size 1.27 1.27))))
+				(number "5"
+					(effects (font (size 1.27 1.27)))))
+			)
+			(embedded_fonts no)
+		)
+		(symbol "power:VCC"
+			(power global)
+			(pin_numbers
+				(hide yes)
+			)
+			(pin_names
+				(offset 0)
+				(hide yes)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "#PWR"
+				(at 0 -3.81 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "VCC"
+				(at 0 3.556 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" "Power symbol creates a global label with name \"VCC\""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_keywords" "global power"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "VCC_0_1"
+				(polyline
+					(pts
+						(xy -0.762 1.27) (xy 0 2.54)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 2.54) (xy 0.762 1.27)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 0) (xy 0 2.54)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "VCC_1_1"
+				(pin power_in line
+					(at 0 0 90)
+					(length 0)
+					(name ""
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)		(symbol "power:GND"
+			(power global)
+			(pin_numbers
+				(hide yes)
+			)
+			(pin_names
+				(offset 0)
+				(hide yes)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "#PWR"
+				(at 0 -6.35 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "GND"
+				(at 0 -3.81 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_keywords" "global power"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "GND_0_1"
+				(polyline
+					(pts
+						(xy 0 0) (xy 0 -1.27) (xy 1.27 -1.27) (xy 0 -2.54) (xy -1.27 -1.27) (xy 0 -1.27)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "GND_1_1"
+				(pin power_in line
+					(at 0 0 270)
+					(length 0)
+					(name ""
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)	)
+	(symbol
+		(lib_id "mk9_ble:MDBT42Q")
+		(at 127 88.9 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "2e66b674-7e62-4aa0-af94-70af8d2ea752")
+		(property "Reference" "U1"
+			(at 127 76.2 0)
+			(show_name no)(do_not_autoplace no)
+			(effects (font (size 1.27 1.27))))
+		(property "Value" "MDBT42Q-512KV2"
+			(at 127 101.6 0)
+			(show_name no)(do_not_autoplace no)
+			(effects (font (size 1.27 1.27))))
+		(property "Footprint" ""
+			(at 127 88.9 0)
+			(hide yes)
+			(show_name no)(do_not_autoplace no)
+			(effects (font (size 1.27 1.27))))
+		(property "Datasheet" ""
+			(at 127 88.9 0)
+			(hide yes)
+			(show_name no)(do_not_autoplace no)
+			(effects (font (size 1.27 1.27))))
+		(property "Description" ""
+			(at 127 88.9 0)
+			(hide yes)
+			(show_name no)(do_not_autoplace no)
+			(effects (font (size 1.27 1.27))))
+		(pin "1"
+			(uuid "bf35f43f-f3b8-4749-94c0-1095392e3bd6"))
+		(pin "2"
+			(uuid "0a93addc-74ea-4a33-8791-335ab11f37d6"))
+		(pin "3"
+			(uuid "c5393e71-7688-49e7-97ea-0d8fa74c497d"))
+		(pin "4"
+			(uuid "ebce170e-6e7d-4f2f-b597-7698c07c0b9e"))
+		(pin "5"
+			(uuid "7bb6838e-7694-4621-bf8f-942939fc3a05"))
+		(pin "6"
+			(uuid "7b869e38-7399-4723-87b9-0c7b1bb534b0"))
+		(pin "7"
+			(uuid "1ec79b3b-b0a5-4faf-a9bd-dabff2fd6ff0"))
+		(instances
+			(project "BLE-nRF52-SAO"
+				(path "/f5c6faef-dfa7-47a6-a960-5542f5f53414"
+					(reference "U1")
+					(unit 1))))
+	)
+	(symbol
+		(lib_id "badgelife_shitty_addon_v169bis:Badgelife_sao_connector_v169bis")
+		(at 180.34 88.9 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "62ef140f-5712-41df-bbc9-47703f09c890")
+		(property "Reference" "X1"
+			(at 180.34 76.2 0)
+			(show_name no)(do_not_autoplace no)
+			(effects (font (size 1.27 1.27))))
+		(property "Value" "SAO1"
+			(at 180.34 101.6 0)
+			(show_name no)(do_not_autoplace no)
+			(effects (font (size 1.27 1.27))))
+		(property "Footprint" "lib_fp:Badgelife-Shitty-v1.69bis"
+			(at 180.34 88.9 0)
+			(hide yes)
+			(show_name no)(do_not_autoplace no)
+			(effects (font (size 1.27 1.27))))
+		(property "Datasheet" ""
+			(at 180.34 88.9 0)
+			(hide yes)
+			(show_name no)(do_not_autoplace no)
+			(effects (font (size 1.27 1.27))))
+		(property "Description" ""
+			(at 180.34 88.9 0)
+			(hide yes)
+			(show_name no)(do_not_autoplace no)
+			(effects (font (size 1.27 1.27))))
+		(pin "1"
+			(uuid "bc5ec749-e07d-4df8-8962-f3e2b17984ec"))
+		(pin "2"
+			(uuid "199f1e43-aa2b-4e9a-8dd4-2824a2501adf"))
+		(pin "3"
+			(uuid "8228b724-9c71-4183-87f4-2ef82a8321e2"))
+		(pin "4"
+			(uuid "2631fb43-0f2f-4a94-b2d2-d089a71190b9"))
+		(pin "5"
+			(uuid "52ac5798-ee81-44fb-bb56-c52e4bf96ea3"))
+		(pin "6"
+			(uuid "3ee97c36-ce8d-4959-9a63-115a2c96f050"))
+		(instances
+			(project "BLE-nRF52-SAO"
+				(path "/f5c6faef-dfa7-47a6-a960-5542f5f53414"
+					(reference "X1")
+					(unit 1))))
+	)
+	(symbol
+		(lib_id "Device:C")
+		(at 149.86 111.76 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "19df1e6a-2aab-4cef-a037-c32e9705bd18")
+		(property "Reference" "C1"
+			(at 149.86 99.06 0)
+			(show_name no)(do_not_autoplace no)
+			(effects (font (size 1.27 1.27))))
+		(property "Value" "100nF"
+			(at 149.86 124.46 0)
+			(show_name no)(do_not_autoplace no)
+			(effects (font (size 1.27 1.27))))
+		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
+			(at 149.86 111.76 0)
+			(hide yes)
+			(show_name no)(do_not_autoplace no)
+			(effects (font (size 1.27 1.27))))
+		(property "Datasheet" ""
+			(at 149.86 111.76 0)
+			(hide yes)
+			(show_name no)(do_not_autoplace no)
+			(effects (font (size 1.27 1.27))))
+		(property "Description" ""
+			(at 149.86 111.76 0)
+			(hide yes)
+			(show_name no)(do_not_autoplace no)
+			(effects (font (size 1.27 1.27))))
+		(pin "1"
+			(uuid "05e304cc-fdf1-4dbd-a25c-890f8fcf5069"))
+		(pin "2"
+			(uuid "acdf603d-622a-4a9a-ba2c-9b94c75e0e99"))
+		(instances
+			(project "BLE-nRF52-SAO"
+				(path "/f5c6faef-dfa7-47a6-a960-5542f5f53414"
+					(reference "C1")
+					(unit 1))))
+	)
+	(symbol
+		(lib_id "Device:C")
+		(at 162.56 111.76 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "6030ca8c-c716-4c59-b484-0a8126cb1f23")
+		(property "Reference" "C2"
+			(at 162.56 99.06 0)
+			(show_name no)(do_not_autoplace no)
+			(effects (font (size 1.27 1.27))))
+		(property "Value" "4.7uF"
+			(at 162.56 124.46 0)
+			(show_name no)(do_not_autoplace no)
+			(effects (font (size 1.27 1.27))))
+		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
+			(at 162.56 111.76 0)
+			(hide yes)
+			(show_name no)(do_not_autoplace no)
+			(effects (font (size 1.27 1.27))))
+		(property "Datasheet" ""
+			(at 162.56 111.76 0)
+			(hide yes)
+			(show_name no)(do_not_autoplace no)
+			(effects (font (size 1.27 1.27))))
+		(property "Description" ""
+			(at 162.56 111.76 0)
+			(hide yes)
+			(show_name no)(do_not_autoplace no)
+			(effects (font (size 1.27 1.27))))
+		(pin "1"
+			(uuid "2d9fafea-afc7-4f20-a73b-081b27855f3b"))
+		(pin "2"
+			(uuid "e77bc3af-5194-490d-8798-b2472529de89"))
+		(instances
+			(project "BLE-nRF52-SAO"
+				(path "/f5c6faef-dfa7-47a6-a960-5542f5f53414"
+					(reference "C2")
+					(unit 1))))
+	)
+	(symbol
+		(lib_id "Connector_Generic:Conn_01x05")
+		(at 99.06 113.03 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "38aa34e6-c077-41bb-8715-c7a1259bb563")
+		(property "Reference" "J1"
+			(at 99.06 100.33 0)
+			(show_name no)(do_not_autoplace no)
+			(effects (font (size 1.27 1.27))))
+		(property "Value" "SWD"
+			(at 99.06 125.73 0)
+			(show_name no)(do_not_autoplace no)
+			(effects (font (size 1.27 1.27))))
+		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x05_P2.54mm_Vertical"
+			(at 99.06 113.03 0)
+			(hide yes)
+			(show_name no)(do_not_autoplace no)
+			(effects (font (size 1.27 1.27))))
+		(property "Datasheet" ""
+			(at 99.06 113.03 0)
+			(hide yes)
+			(show_name no)(do_not_autoplace no)
+			(effects (font (size 1.27 1.27))))
+		(property "Description" ""
+			(at 99.06 113.03 0)
+			(hide yes)
+			(show_name no)(do_not_autoplace no)
+			(effects (font (size 1.27 1.27))))
+		(pin "1"
+			(uuid "9b3946ce-ca69-4caa-9b72-49ba864d115f"))
+		(pin "2"
+			(uuid "08d656dc-5d81-4bdf-bda4-5fdaaadb52a7"))
+		(pin "3"
+			(uuid "6998e5ae-b730-4a27-8684-40b22ec2af51"))
+		(pin "4"
+			(uuid "a333ca5c-1c8b-46c9-a016-669fb8137135"))
+		(pin "5"
+			(uuid "c2db6d04-7aaa-401c-b97c-06f2c513f4e0"))
+		(instances
+			(project "BLE-nRF52-SAO"
+				(path "/f5c6faef-dfa7-47a6-a960-5542f5f53414"
+					(reference "J1")
+					(unit 1))))
+	)
+	(symbol
+		(lib_id "power:VCC")
+		(at 114.3 81.28 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "57aece49-dde3-418a-9fd6-5269a97c7156")
+		(property "Reference" "#PWR01"
+			(at 114.3 68.58 0)
+			(show_name no)(do_not_autoplace no)
+			(effects (font (size 1.27 1.27))))
+		(property "Value" "VCC"
+			(at 114.3 93.98 0)
+			(hide yes)
+			(show_name no)(do_not_autoplace no)
+			(effects (font (size 1.27 1.27))))
+		(property "Footprint" ""
+			(at 114.3 81.28 0)
+			(hide yes)
+			(show_name no)(do_not_autoplace no)
+			(effects (font (size 1.27 1.27))))
+		(property "Datasheet" ""
+			(at 114.3 81.28 0)
+			(hide yes)
+			(show_name no)(do_not_autoplace no)
+			(effects (font (size 1.27 1.27))))
+		(property "Description" ""
+			(at 114.3 81.28 0)
+			(hide yes)
+			(show_name no)(do_not_autoplace no)
+			(effects (font (size 1.27 1.27))))
+		(pin "1"
+			(uuid "65f3209e-1286-4a68-8f49-dbc61853ac32"))
+		(instances
+			(project "BLE-nRF52-SAO"
+				(path "/f5c6faef-dfa7-47a6-a960-5542f5f53414"
+					(reference "#PWR01")
+					(unit 1))))
+	)
+	(symbol
+		(lib_id "power:VCC")
+		(at 193.04 86.36 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "0f452d27-614b-4a8d-ba87-a629ec9dc485")
+		(property "Reference" "#PWR02"
+			(at 193.04 73.66 0)
+			(show_name no)(do_not_autoplace no)
+			(effects (font (size 1.27 1.27))))
+		(property "Value" "VCC"
+			(at 193.04 99.06 0)
+			(hide yes)
+			(show_name no)(do_not_autoplace no)
+			(effects (font (size 1.27 1.27))))
+		(property "Footprint" ""
+			(at 193.04 86.36 0)
+			(hide yes)
+			(show_name no)(do_not_autoplace no)
+			(effects (font (size 1.27 1.27))))
+		(property "Datasheet" ""
+			(at 193.04 86.36 0)
+			(hide yes)
+			(show_name no)(do_not_autoplace no)
+			(effects (font (size 1.27 1.27))))
+		(property "Description" ""
+			(at 193.04 86.36 0)
+			(hide yes)
+			(show_name no)(do_not_autoplace no)
+			(effects (font (size 1.27 1.27))))
+		(pin "1"
+			(uuid "1b1f791a-f9cd-44ba-a49b-bf9ba54427b2"))
+		(instances
+			(project "BLE-nRF52-SAO"
+				(path "/f5c6faef-dfa7-47a6-a960-5542f5f53414"
+					(reference "#PWR02")
+					(unit 1))))
+	)
+	(symbol
+		(lib_id "power:VCC")
+		(at 149.86 107.95 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "a3663a14-33f5-47a7-b224-c0a2f31fe14f")
+		(property "Reference" "#PWR03"
+			(at 149.86 95.25 0)
+			(show_name no)(do_not_autoplace no)
+			(effects (font (size 1.27 1.27))))
+		(property "Value" "VCC"
+			(at 149.86 120.65 0)
+			(hide yes)
+			(show_name no)(do_not_autoplace no)
+			(effects (font (size 1.27 1.27))))
+		(property "Footprint" ""
+			(at 149.86 107.95 0)
+			(hide yes)
+			(show_name no)(do_not_autoplace no)
+			(effects (font (size 1.27 1.27))))
+		(property "Datasheet" ""
+			(at 149.86 107.95 0)
+			(hide yes)
+			(show_name no)(do_not_autoplace no)
+			(effects (font (size 1.27 1.27))))
+		(property "Description" ""
+			(at 149.86 107.95 0)
+			(hide yes)
+			(show_name no)(do_not_autoplace no)
+			(effects (font (size 1.27 1.27))))
+		(pin "1"
+			(uuid "9890a0c1-1c70-490b-bbdf-e3ae717489da"))
+		(instances
+			(project "BLE-nRF52-SAO"
+				(path "/f5c6faef-dfa7-47a6-a960-5542f5f53414"
+					(reference "#PWR03")
+					(unit 1))))
+	)
+	(symbol
+		(lib_id "power:VCC")
+		(at 162.56 107.95 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "62467d54-8f5c-4238-8b9c-0f2450a9167a")
+		(property "Reference" "#PWR04"
+			(at 162.56 95.25 0)
+			(show_name no)(do_not_autoplace no)
+			(effects (font (size 1.27 1.27))))
+		(property "Value" "VCC"
+			(at 162.56 120.65 0)
+			(hide yes)
+			(show_name no)(do_not_autoplace no)
+			(effects (font (size 1.27 1.27))))
+		(property "Footprint" ""
+			(at 162.56 107.95 0)
+			(hide yes)
+			(show_name no)(do_not_autoplace no)
+			(effects (font (size 1.27 1.27))))
+		(property "Datasheet" ""
+			(at 162.56 107.95 0)
+			(hide yes)
+			(show_name no)(do_not_autoplace no)
+			(effects (font (size 1.27 1.27))))
+		(property "Description" ""
+			(at 162.56 107.95 0)
+			(hide yes)
+			(show_name no)(do_not_autoplace no)
+			(effects (font (size 1.27 1.27))))
+		(pin "1"
+			(uuid "bff01cdb-c551-48a2-82cb-0b477fa22c66"))
+		(instances
+			(project "BLE-nRF52-SAO"
+				(path "/f5c6faef-dfa7-47a6-a960-5542f5f53414"
+					(reference "#PWR04")
+					(unit 1))))
+	)
+	(symbol
+		(lib_id "power:VCC")
+		(at 93.98 107.95 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "6f0ef6a4-e8a5-45ca-94fa-75743894dab8")
+		(property "Reference" "#PWR05"
+			(at 93.98 95.25 0)
+			(show_name no)(do_not_autoplace no)
+			(effects (font (size 1.27 1.27))))
+		(property "Value" "VCC"
+			(at 93.98 120.65 0)
+			(hide yes)
+			(show_name no)(do_not_autoplace no)
+			(effects (font (size 1.27 1.27))))
+		(property "Footprint" ""
+			(at 93.98 107.95 0)
+			(hide yes)
+			(show_name no)(do_not_autoplace no)
+			(effects (font (size 1.27 1.27))))
+		(property "Datasheet" ""
+			(at 93.98 107.95 0)
+			(hide yes)
+			(show_name no)(do_not_autoplace no)
+			(effects (font (size 1.27 1.27))))
+		(property "Description" ""
+			(at 93.98 107.95 0)
+			(hide yes)
+			(show_name no)(do_not_autoplace no)
+			(effects (font (size 1.27 1.27))))
+		(pin "1"
+			(uuid "9f5d0d2d-d82d-4e5a-8de3-84ef58c1ff93"))
+		(instances
+			(project "BLE-nRF52-SAO"
+				(path "/f5c6faef-dfa7-47a6-a960-5542f5f53414"
+					(reference "#PWR05")
+					(unit 1))))
+	)
+	(symbol
+		(lib_id "power:GND")
+		(at 114.3 83.82 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "affaf1f6-6ac2-4223-a863-4b6bda7aba26")
+		(property "Reference" "#PWR06"
+			(at 114.3 71.12 0)
+			(show_name no)(do_not_autoplace no)
+			(effects (font (size 1.27 1.27))))
+		(property "Value" "GND"
+			(at 114.3 96.52 0)
+			(hide yes)
+			(show_name no)(do_not_autoplace no)
+			(effects (font (size 1.27 1.27))))
+		(property "Footprint" ""
+			(at 114.3 83.82 0)
+			(hide yes)
+			(show_name no)(do_not_autoplace no)
+			(effects (font (size 1.27 1.27))))
+		(property "Datasheet" ""
+			(at 114.3 83.82 0)
+			(hide yes)
+			(show_name no)(do_not_autoplace no)
+			(effects (font (size 1.27 1.27))))
+		(property "Description" ""
+			(at 114.3 83.82 0)
+			(hide yes)
+			(show_name no)(do_not_autoplace no)
+			(effects (font (size 1.27 1.27))))
+		(pin "1"
+			(uuid "84727f80-df53-42f3-954e-54ee8733e105"))
+		(instances
+			(project "BLE-nRF52-SAO"
+				(path "/f5c6faef-dfa7-47a6-a960-5542f5f53414"
+					(reference "#PWR06")
+					(unit 1))))
+	)
+	(symbol
+		(lib_id "power:GND")
+		(at 167.64 86.36 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "06986488-9b70-4a12-8ce0-92fca95d5b29")
+		(property "Reference" "#PWR07"
+			(at 167.64 73.66 0)
+			(show_name no)(do_not_autoplace no)
+			(effects (font (size 1.27 1.27))))
+		(property "Value" "GND"
+			(at 167.64 99.06 0)
+			(hide yes)
+			(show_name no)(do_not_autoplace no)
+			(effects (font (size 1.27 1.27))))
+		(property "Footprint" ""
+			(at 167.64 86.36 0)
+			(hide yes)
+			(show_name no)(do_not_autoplace no)
+			(effects (font (size 1.27 1.27))))
+		(property "Datasheet" ""
+			(at 167.64 86.36 0)
+			(hide yes)
+			(show_name no)(do_not_autoplace no)
+			(effects (font (size 1.27 1.27))))
+		(property "Description" ""
+			(at 167.64 86.36 0)
+			(hide yes)
+			(show_name no)(do_not_autoplace no)
+			(effects (font (size 1.27 1.27))))
+		(pin "1"
+			(uuid "3e98e882-4217-4ff0-894c-e1ab244842e9"))
+		(instances
+			(project "BLE-nRF52-SAO"
+				(path "/f5c6faef-dfa7-47a6-a960-5542f5f53414"
+					(reference "#PWR07")
+					(unit 1))))
+	)
+	(symbol
+		(lib_id "power:GND")
+		(at 149.86 115.57 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "48f5c079-1928-408a-8905-a727c8e3ffd7")
+		(property "Reference" "#PWR08"
+			(at 149.86 102.87 0)
+			(show_name no)(do_not_autoplace no)
+			(effects (font (size 1.27 1.27))))
+		(property "Value" "GND"
+			(at 149.86 128.27 0)
+			(hide yes)
+			(show_name no)(do_not_autoplace no)
+			(effects (font (size 1.27 1.27))))
+		(property "Footprint" ""
+			(at 149.86 115.57 0)
+			(hide yes)
+			(show_name no)(do_not_autoplace no)
+			(effects (font (size 1.27 1.27))))
+		(property "Datasheet" ""
+			(at 149.86 115.57 0)
+			(hide yes)
+			(show_name no)(do_not_autoplace no)
+			(effects (font (size 1.27 1.27))))
+		(property "Description" ""
+			(at 149.86 115.57 0)
+			(hide yes)
+			(show_name no)(do_not_autoplace no)
+			(effects (font (size 1.27 1.27))))
+		(pin "1"
+			(uuid "8a1e0000-4b80-4832-b788-c9b24a9ff4d4"))
+		(instances
+			(project "BLE-nRF52-SAO"
+				(path "/f5c6faef-dfa7-47a6-a960-5542f5f53414"
+					(reference "#PWR08")
+					(unit 1))))
+	)
+	(symbol
+		(lib_id "power:GND")
+		(at 162.56 115.57 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "6f14b1b4-6b54-4e62-8ddb-b0de20d221d3")
+		(property "Reference" "#PWR09"
+			(at 162.56 102.87 0)
+			(show_name no)(do_not_autoplace no)
+			(effects (font (size 1.27 1.27))))
+		(property "Value" "GND"
+			(at 162.56 128.27 0)
+			(hide yes)
+			(show_name no)(do_not_autoplace no)
+			(effects (font (size 1.27 1.27))))
+		(property "Footprint" ""
+			(at 162.56 115.57 0)
+			(hide yes)
+			(show_name no)(do_not_autoplace no)
+			(effects (font (size 1.27 1.27))))
+		(property "Datasheet" ""
+			(at 162.56 115.57 0)
+			(hide yes)
+			(show_name no)(do_not_autoplace no)
+			(effects (font (size 1.27 1.27))))
+		(property "Description" ""
+			(at 162.56 115.57 0)
+			(hide yes)
+			(show_name no)(do_not_autoplace no)
+			(effects (font (size 1.27 1.27))))
+		(pin "1"
+			(uuid "859ad1c1-a236-4576-8d3b-36d661818c75"))
+		(instances
+			(project "BLE-nRF52-SAO"
+				(path "/f5c6faef-dfa7-47a6-a960-5542f5f53414"
+					(reference "#PWR09")
+					(unit 1))))
+	)
+	(symbol
+		(lib_id "power:GND")
+		(at 93.98 118.11 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "aadcd590-fb85-434f-b70e-c8d9347b5d30")
+		(property "Reference" "#PWR010"
+			(at 93.98 105.41 0)
+			(show_name no)(do_not_autoplace no)
+			(effects (font (size 1.27 1.27))))
+		(property "Value" "GND"
+			(at 93.98 130.81 0)
+			(hide yes)
+			(show_name no)(do_not_autoplace no)
+			(effects (font (size 1.27 1.27))))
+		(property "Footprint" ""
+			(at 93.98 118.11 0)
+			(hide yes)
+			(show_name no)(do_not_autoplace no)
+			(effects (font (size 1.27 1.27))))
+		(property "Datasheet" ""
+			(at 93.98 118.11 0)
+			(hide yes)
+			(show_name no)(do_not_autoplace no)
+			(effects (font (size 1.27 1.27))))
+		(property "Description" ""
+			(at 93.98 118.11 0)
+			(hide yes)
+			(show_name no)(do_not_autoplace no)
+			(effects (font (size 1.27 1.27))))
+		(pin "1"
+			(uuid "c76ec39a-fc1d-4be9-9894-cb1e523e2caf"))
+		(instances
+			(project "BLE-nRF52-SAO"
+				(path "/f5c6faef-dfa7-47a6-a960-5542f5f53414"
+					(reference "#PWR010")
+					(unit 1))))
+	)
+	(label "SWDIO"
+		(at 114.3 86.36 0)
+		(fields_autoplaced yes)
+		(effects (font (size 1.27 1.27))(justify right bottom))
+		(uuid "513e8b5a-c6e4-4cd0-bc46-f871983104f3"))
+	(label "SWDIO"
+		(at 93.98 110.49 0)
+		(fields_autoplaced yes)
+		(effects (font (size 1.27 1.27))(justify left bottom))
+		(uuid "782faa18-412e-4cf5-acb4-9d9f501de16c"))
+	(label "SWDCLK"
+		(at 114.3 88.9 0)
+		(fields_autoplaced yes)
+		(effects (font (size 1.27 1.27))(justify right bottom))
+		(uuid "ece74b82-18a9-4ecb-b667-628d1bd70481"))
+	(label "SWDCLK"
+		(at 93.98 113.03 0)
+		(fields_autoplaced yes)
+		(effects (font (size 1.27 1.27))(justify left bottom))
+		(uuid "09bf3a7a-63d2-4d44-9301-4c643d7dd342"))
+	(label "RESET"
+		(at 114.3 91.44 0)
+		(fields_autoplaced yes)
+		(effects (font (size 1.27 1.27))(justify right bottom))
+		(uuid "454d279b-777f-4612-a3df-b36c516d43a5"))
+	(label "RESET"
+		(at 93.98 115.57 0)
+		(fields_autoplaced yes)
+		(effects (font (size 1.27 1.27))(justify left bottom))
+		(uuid "b08979d9-8de8-44ff-993b-04d44b8834d1"))
+	(label "FRIEND_TXO"
+		(at 139.7 81.28 0)
+		(fields_autoplaced yes)
+		(effects (font (size 1.27 1.27))(justify left bottom))
+		(uuid "1e46e023-1662-4cfb-a3a9-cafef7738b90"))
+	(label "FRIEND_TXO"
+		(at 193.04 91.44 0)
+		(fields_autoplaced yes)
+		(effects (font (size 1.27 1.27))(justify left bottom))
+		(uuid "f3e08ab3-e93e-406d-9c05-a858c847e9c7"))
+	(label "FRIEND_RXI"
+		(at 139.7 83.82 0)
+		(fields_autoplaced yes)
+		(effects (font (size 1.27 1.27))(justify left bottom))
+		(uuid "f1e9d6f8-e2ac-449b-b288-bc436c9dbfa2"))
+	(label "FRIEND_RXI"
+		(at 167.64 91.44 0)
+		(fields_autoplaced yes)
+		(effects (font (size 1.27 1.27))(justify right bottom))
+		(uuid "700c3b48-7bda-4784-81fd-8ebdfaa11b41"))
+	(no_connect (at 193.04 88.9)(uuid "fc33503b-f772-4307-b15a-ac03ac5c6cfc"))
+	(no_connect (at 167.64 88.9)(uuid "7653a35a-7419-48c2-aea2-dffcd88f0dac"))
+	(sheet_instances
+		(path "/"
+			(page "1")))
+	(embedded_fonts no)
+)

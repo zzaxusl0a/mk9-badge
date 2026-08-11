@@ -9,27 +9,49 @@ from state import State
 import global_tools
 
 # ---------------------------------------------------------------------------
-# USB HID keyboard (requires boot.py to have enabled usb_hid)
+# Keyboard output — driven by the editable keymap, sent over USB and/or BLE
+# (requires boot.py to have enabled usb_hid for the USB path)
 # ---------------------------------------------------------------------------
-try:
-    import usb_hid
-    from adafruit_hid.keyboard import Keyboard
-    from adafruit_hid.keycode import Keycode
-    _keyboard = Keyboard(usb_hid.devices)
-    HID_AVAILABLE = True
-except Exception:
-    _keyboard = None
-    HID_AVAILABLE = False
+from typer import usb_typer, ble_typer, resolve_keycode, parse_combo
 
-# Numpad layout — top-left key sends 7, bottom-right sends 3
-if HID_AVAILABLE:
-    _KEY_CODES = [
-        Keycode.KEYPAD_SEVEN, Keycode.KEYPAD_EIGHT, Keycode.KEYPAD_NINE,
-        Keycode.KEYPAD_FOUR,  Keycode.KEYPAD_FIVE,  Keycode.KEYPAD_SIX,
-        Keycode.KEYPAD_ONE,   Keycode.KEYPAD_TWO,   Keycode.KEYPAD_THREE,
-    ]
-else:
-    _KEY_CODES = [None] * 9
+# Fallback if keymap.py is missing or malformed: the classic numpad
+_DEFAULT_KEYMAP = [
+    {"key": "KEYPAD_SEVEN"}, {"key": "KEYPAD_EIGHT"}, {"key": "KEYPAD_NINE"},
+    {"key": "KEYPAD_FOUR"},  {"key": "KEYPAD_FIVE"},  {"key": "KEYPAD_SIX"},
+    {"key": "KEYPAD_ONE"},   {"key": "KEYPAD_TWO"},   {"key": "KEYPAD_THREE"},
+]
+
+
+def _normalize_entry(entry):
+    """Turn one keymap entry into a ('kind', payload) tuple."""
+    if isinstance(entry, str):
+        return ("text", entry)
+    if isinstance(entry, dict):
+        if "key" in entry:
+            return ("key", resolve_keycode(entry["key"]))
+        if "text" in entry:
+            return ("text", str(entry["text"]))
+        if "combo" in entry:
+            return ("combo", parse_combo(entry["combo"]))
+    print("keymap: unrecognised entry, ignoring:", entry)
+    return ("none", None)
+
+
+def _load_actions():
+    km = None
+    try:
+        from keymap import KEYMAP as km
+    except Exception as e:
+        print("keymap: could not load keymap.py, using default numpad:", e)
+    if not isinstance(km, (list, tuple)) or len(km) < 9:
+        if km is not None:
+            print("keymap: KEYMAP must be a list of 9 entries; using default numpad")
+        km = _DEFAULT_KEYMAP
+    return [_normalize_entry(km[i]) for i in range(9)]
+
+
+# Per-key actions, index == key_number (0-8)
+_KEY_ACTIONS = _load_actions()
 
 # One vibrant colour per key, evenly spaced on the colour wheel
 _KEY_COLORS = [colorwheel(i * 28) for i in range(9)]
@@ -104,11 +126,8 @@ class BadgeState(State):
         State.enter(self, machine)
 
     def exit(self, machine):
-        if HID_AVAILABLE and _keyboard:
-            try:
-                _keyboard.release_all()
-            except Exception:
-                pass
+        usb_typer.release_all()
+        ble_typer.release_all()
         pixels.fill((0, 0, 0))
         pixels.show()
         State.exit(self, machine)
@@ -228,19 +247,20 @@ class BadgeState(State):
         event = keys.events.get()
         if event:
             key = event.key_number
+            # Type over USB when a host is connected, otherwise over Bluetooth
+            typer = usb_typer if supervisor.runtime.usb_connected else ble_typer
+            kind, payload = _KEY_ACTIONS[key]
             if event.pressed:
                 self.ripples.append(_Ripple(key, _KEY_COLORS[key]))
-                if HID_AVAILABLE and supervisor.runtime.usb_connected:
-                    try:
-                        _keyboard.press(_KEY_CODES[key])
-                    except Exception:
-                        pass
+                if kind == "key":
+                    typer.press(payload)
+                elif kind == "text":
+                    typer.type_text(payload)
+                elif kind == "combo":
+                    typer.combo(payload)
             elif event.released:
-                if HID_AVAILABLE and supervisor.runtime.usb_connected:
-                    try:
-                        _keyboard.release(_KEY_CODES[key])
-                    except Exception:
-                        pass
+                if kind == "key":
+                    typer.release(payload)
 
         # Render background
         if self.pattern == 0:

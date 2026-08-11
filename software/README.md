@@ -59,14 +59,19 @@ Adafruit MSA301-compatible device.
 | SDA    | GP9  |
 | SCL    | GP10 |
 
-**SAO GPIO pins** (configured as inputs with pull-up by default):
+**SAO GPIO pins:**
 
-| Pin     | GPIO |
-|---------|------|
-| SAO1 G1 | GP29 |
-| SAO1 G2 | GP28 |
-| SAO2 G1 | GP12 |
-| SAO2 G2 | GP11 |
+| Pin     | GPIO | Default role |
+|---------|------|--------------|
+| SAO1 G1 | GP29 | BLE UART **RX** (Friend TXO) — see Bluetooth below |
+| SAO1 G2 | GP28 | BLE UART **TX** (Friend RXI) — see Bluetooth below |
+| SAO2 G1 | GP12 | input, pull-up |
+| SAO2 G2 | GP11 | input, pull-up |
+
+> With `USE_BLE_SAO = True` (default in `setup.py`) SAO1's two side pins become a
+> UART for the Bluetooth module. Power and the shared I2C0 bus are unchanged on
+> both headers, so I2C/power SAOs still work — **put other SAOs in SAO2.** Set
+> `USE_BLE_SAO = False` to revert SAO1 to plain GPIO inputs.
 
 ---
 
@@ -77,10 +82,12 @@ software/
 ├── boot.py          — Runs before code.py; enables USB HID keyboard
 ├── code.py          — Entry point; creates and runs the state machine
 ├── state.py         — Base State and StateMachine classes
-├── setup.py         — Hardware initialisation (pixels, keymatrix, I2C, accel)
+├── setup.py         — Hardware init (pixels, keymatrix, I2C, accel, BLE UART)
 ├── global_tools.py  — Shared mutable globals (brightness, pattern index)
-├── state_startup.py — Boot animation: diagonal colour wipe
-└── state_badge.py   — Main badge mode: backgrounds, ripples, HID output
+├── keymap.py        — EDITABLE: what each of the 9 keys sends (key/text/combo)
+├── typer.py         — Uniform keyboard output over USB HID and/or Bluetooth
+├── state_startup.py — Boot animation: diagonal colour wipe + BLE status flash
+└── state_badge.py   — Main badge mode: backgrounds, ripples, keyboard output
 ```
 
 ### State machine
@@ -106,13 +113,51 @@ software/
 
 **Accelerometer reactivity** — tilt shifts the hue offset of the background pattern continuously. A vigorous shake (>16 m/s²) cycles to the next pattern after a 2-second cooldown.
 
-**USB keyboard** — when connected to a host, keypresses are sent as numpad keycodes with full N-key rollover:
+**Keyboard output** — each keypress is sent to the host as configured in
+`keymap.py`. By default it's the classic numpad with full N-key rollover:
 
 ```
 7  8  9
 4  5  6
 1  2  3
 ```
+
+Output is routed automatically: **USB HID when a USB host is connected,
+Bluetooth when running on battery** (see Bluetooth below).
+
+---
+
+## Bluetooth keyboard (optional SAO add-on)
+
+Plug an **Adafruit Bluefruit LE UART Friend (#2479)** into **SAO1** to make the
+badge a wireless Bluetooth keyboard. The RP2040 has no radio, so the Friend
+provides it; its stock firmware already speaks BLE HID via AT commands (no extra
+firmware to flash). When no USB host is connected, keypresses go out over BLE.
+
+### Wiring (SAO1 header → Friend)
+
+| SAO1 pin | Friend pin | Note |
+|----------|------------|------|
+| VCC (3.3 V) | VIN | Friend accepts 3.3–16 V |
+| GND | GND | |
+| GPIO1 = GP29 | **TXO** | Friend → RP2040 (UART RX) |
+| GPIO2 = GP28 | **RXI** | RP2040 → Friend (UART TX) |
+| — | **CTS → GND** | required; the Friend ignores input if CTS floats |
+
+Because the Friend isn't SAO-shaped, use a short SAO→Friend adapter/harness with
+CTS jumped to GND. Leave the Friend's MOD/DFU pin floating. A productized version
+of this adapter (a real SAO PCB that hosts the Friend), plus a modern single-board
+nRF52 alternative, is designed in [`hardware/BLE-SAO-README.md`](../hardware/BLE-SAO-README.md).
+
+### Status flash at boot
+
+When BLE is enabled, the backlight ring flashes once at startup:
+**green** = Friend detected and HID enabled, **red** = no module/unresponsive.
+
+### Pairing
+
+Power the badge (battery, or USB just for power), open your host's Bluetooth
+settings, and pair **"MK9 Badge"**. After bonding once, keypresses type over BLE.
 
 ---
 
@@ -127,6 +172,10 @@ Place in the `lib/` folder on CIRCUITPY:
 | `adafruit_hid/` | Adafruit CircuitPython HID |
 
 All available from the [Adafruit CircuitPython Bundle](https://github.com/adafruit/Adafruit_CircuitPython_Bundle/releases).
+
+Make sure the `adafruit_hid/` folder includes `keyboard_layout_us.mpy` and
+`keyboard_layout_base.mpy` — these are needed for `text` macros over USB. The
+Bluetooth path uses raw AT commands and needs no extra library.
 
 ---
 
@@ -145,7 +194,11 @@ All available from the [Adafruit CircuitPython Bundle](https://github.com/adafru
 ## Extending / Customising
 
 - **Add a new background pattern** — add a `_bg_yourpattern()` method to `BadgeState`, increment `_NUM_PATTERNS`, and add an `elif` branch in `update()`.
-- **Remap keys** — edit `_KEY_CODES` in `state_badge.py`. Any `Keycode.*` constant works.
+- **Remap keys / add macros** — edit **`keymap.py`** on the CIRCUITPY drive. Each
+  of the 9 entries is `{"key": "NAME"}` (held key), `{"text": "..."}` (typed
+  string), `{"combo": "CTRL-C"}` (chord), or a bare string (shorthand for text).
+  Save and the badge auto-reloads; no reflash. A bad entry falls back to the
+  default numpad and logs to the serial console.
 - **Change key colours** — edit `_KEY_COLORS` in `state_badge.py`.
 - **Add an SAO** — use `i2c_sao` (already initialised) and the `sao*_gpio*` pins from `setup.py`.
 - **Add a new state** — subclass `State`, implement `name`, `enter`, `exit`, `update`; register it with `machine.add_state()` in `code.py`.

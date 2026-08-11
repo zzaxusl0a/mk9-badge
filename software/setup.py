@@ -47,7 +47,7 @@ except Exception:
     ACCEL_AVAILABLE = False
 
 # ---------------------------------------------------------------------------
-# SAO connector — I2C0, SDA=GP9, SCL=GP10
+# SAO connector — I2C0, SDA=GP9, SCL=GP10 (shared across both SAO headers)
 # ---------------------------------------------------------------------------
 try:
     i2c_sao = busio.I2C(board.GP10, board.GP9)
@@ -56,13 +56,47 @@ except Exception:
     i2c_sao = None
     SAO_AVAILABLE = False
 
-# SAO GPIO pins (configured as inputs with pull-up; change per SAO use case)
-sao1_gpio1 = digitalio.DigitalInOut(board.GP29)
-sao1_gpio2 = digitalio.DigitalInOut(board.GP28)
+# ---------------------------------------------------------------------------
+# SAO1 as a Bluetooth link
+# ---------------------------------------------------------------------------
+# When USE_BLE_SAO is True, SAO1's two side GPIO pins are repurposed as a
+# hardware UART to an Adafruit Bluefruit LE UART Friend (#2479), turning the
+# badge into a Bluetooth HID keyboard:
+#     Friend TXO -> SAO1 GPIO1 = GP29 (UART0 RX)
+#     Friend RXI -> SAO1 GPIO2 = GP28 (UART0 TX)
+#     Friend VIN/GND from the SAO1 header; tie the Friend's CTS pin to GND.
+# SAO1 keeps power + the shared I2C0 bus either way; only the two side pins change.
+#
+# Set USE_BLE_SAO = False to leave SAO1 as a standard GPIO SAO header (GP29/GP28
+# revert to plain inputs, and the Bluetooth path is disabled).
+#
+# NOTE: SAO1 must be the Bluetooth header — it is the only SAO whose two side
+# pins are both hardware-UART-capable. Put any other SAO in SAO2.
+USE_BLE_SAO = True
+
+if USE_BLE_SAO:
+    try:
+        # busio.UART(tx, rx, ...): tx=GP28 -> Friend RXI, rx=GP29 <- Friend TXO
+        ble_uart = busio.UART(board.GP28, board.GP29, baudrate=9600, timeout=0.05)
+        BLE_UART_AVAILABLE = True   # UART allocated — does NOT mean a module is present
+    except Exception:
+        ble_uart = None
+        BLE_UART_AVAILABLE = False
+    sao1_gpio1 = None
+    sao1_gpio2 = None
+else:
+    ble_uart = None
+    BLE_UART_AVAILABLE = False
+    sao1_gpio1 = digitalio.DigitalInOut(board.GP29)
+    sao1_gpio2 = digitalio.DigitalInOut(board.GP28)
+
+# SAO2 side GPIO pins — always plain inputs with pull-up (untouched by BLE)
 sao2_gpio1 = digitalio.DigitalInOut(board.GP12)
 sao2_gpio2 = digitalio.DigitalInOut(board.GP11)
+
 for _pin in (sao1_gpio1, sao1_gpio2, sao2_gpio1, sao2_gpio2):
-    _pin.switch_to_input(pull=digitalio.Pull.UP)
+    if _pin is not None:
+        _pin.switch_to_input(pull=digitalio.Pull.UP)
 
 # ---------------------------------------------------------------------------
 # LED spatial positions — (row, col) in grid units

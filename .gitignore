@@ -1,0 +1,30 @@
+# ---- Python / CircuitPython ----
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# ---- KiCad ----
+# Auto-generated backups, autosave, and lock/cache files
+*-backups/
+_autosave-*
+*.kicad_pcb-bak
+*.kicad_sch-bak
+*.bak
+*.lck
+~*.lck
+fp-info-cache
+# Per-user project-local state (UI state, not design data)
+*.kicad_prl
+
+# ---- macOS ----
+.DS_Store
+.AppleDouble
+._*
+
+# ---- Editors ----
+*.swp
+*~
+.vscode/
+.idea/
