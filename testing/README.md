@@ -1,8 +1,77 @@
 # Hardware Tester
 
-Self-contained hardware test fixture for the MK9 badge. Copy `code.py` to the root of `CIRCUITPY` (replacing the production firmware) to run the tests.
+Self-contained hardware test fixtures for the MK9 badge. Copy the one you want to
+the root of `CIRCUITPY` as `code.py` (replacing the production firmware).
 
-## What It Tests
+| File | What it does |
+|------|--------------|
+| `code.py` | Full fixture — LEDs, key matrix, and accelerometer at once |
+| `level.py` | Accelerometer only, as a bubble level — see [Level Test](#level-test) |
+
+See [DEPLOY.md](../DEPLOY.md) for how to get CircuitPython onto the badge in the
+first place. The quick path: flash `uf2/badge_test.uf2`, which is CircuitPython
+plus these tests plus every library they need, then drop your file on as
+`code.py`.
+
+---
+
+## Level Test
+
+`level.py` turns the badge into a bubble level. It exists to answer one question:
+*is the accelerometer actually working, and does it agree with which way the
+badge is tilted?*
+
+- **Flat on the desk** — the centre key (LED 4) is the only key lit, in green.
+- **Tilted** — the *downhill* key lights instead. Dip the right edge and the
+  right-middle key lights; dip a corner and that corner key lights. All nine keys
+  are reachable: eight tilt directions plus level.
+- **Backlight ring** — green while level, ramping through amber to red as the
+  tilt increases past about 38 degrees.
+
+### Serial output
+
+Twice a second it prints the raw axes alongside the derived board-relative
+values, so you can watch the sensor directly:
+
+```
+raw x= +0.31 y= -6.84 z= +7.02 | right=-6.84 bottom=-0.31 | tilt=44.2 deg | key 3
+```
+
+`right` is positive when the right-hand edge is the low one; `bottom` is positive
+when the edge nearest you is low.
+
+### If the sensor is dead
+
+The whole board flashes red and the console prints an I2C scan of the
+accelerometer bus. `0x26` is the address to look for. Nothing at all on the bus
+almost always means U1 is misaligned on its pads — see the troubleshooting
+section of [buildguide.md](../buildguide.md).
+
+The script prefers `adafruit_msa3xx` but falls back to a small built-in driver
+for the same register map, so a missing library shows up as a distinct message
+rather than as a dead sensor.
+
+### If the lit key is wrong
+
+U1 is placed at 90 degrees on the PCB, so its raw X/Y axes don't line up with the
+badge's left/right and top/bottom, and the correction is baked into two constants
+at the top of the file. If the lit key is consistently rotated or mirrored from
+the edge you actually tipped down, **hold the centre key for about 1.5 seconds**.
+That starts a guided calibration: lay the badge flat, then dip the right edge,
+then dip the bottom edge. It derives the mapping and prints the two lines to
+paste back into `level.py`:
+
+```
+RIGHT_FROM = (1, +1.0)
+DOWN_FROM = (0, -1.0)
+```
+
+A key that lights on the correct *axis* but the wrong *side* is a sign flip; a
+key that lights on the wrong axis entirely is a swap. Calibration fixes both.
+
+---
+
+## Full Fixture (`code.py`)
 
 ### LEDs
 All 15 LEDs (9 key + 6 backlight) cycle through **red → green → blue** continuously:
@@ -52,6 +121,8 @@ Beyond CircuitPython built-ins (`board`, `busio`, `time`, `keypad`), copy these 
 | `adafruit_register/` | Register access helper — dependency of `adafruit_msa3xx` |
 
 If the accelerometer library is missing or the sensor doesn't respond, the tester falls back gracefully — LEDs and keys still work, but the LEDs switch to the red/red/red/blue/green fault-flash pattern described above instead of the normal colour cycle.
+
+---
 
 ## Restoring Production Firmware
 

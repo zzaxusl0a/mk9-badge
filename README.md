@@ -21,7 +21,7 @@ It blinks. It types. You can wear it around your neck and then set it on your de
 
 ## About
 
-The **MK9** is a fully functional **3×3 mechanical macropad badge**. Nine real mechanical switches, per-key RGB lighting, ambient underglow, an accelerometer that actually does something interesting, SAO support, and CircuitPython firmware out of the box — all in a package sized to hang around your neck at DEF CON and survive the week.
+The **MK9** is a fully functional **3×3 mechanical macropad badge**. Nine real mechanical switches, per-key RGB lighting, ambient underglow, an accelerometer that actually does something interesting, SAO support, and firmware preloaded out of the box — all in a package sized to hang around your neck at DEF CON and survive the week.
 
 ---
 
@@ -48,7 +48,8 @@ The **MK9** is a fully functional **3×3 mechanical macropad badge**. Nine real 
 - Reset button + BOOTSEL button for easy firmware flashing
 
 **Firmware**
-- Ships with CircuitPython firmware
+- Ships preflashed with MicroPython firmware — see [`uf2/badge_firmware_1.0.uf2`](uf2/badge_firmware_1.0.uf2)
+- A CircuitPython port lives in [`software/`](software/), plus test fixtures in [`testing/`](testing/)
 - QMK-compatible hardware — reflash and run it as a full QMK macropad
 
 ---
@@ -70,13 +71,18 @@ Once running:
 ```
 mk9-badge/
 ├── buildguide.md — badge assembly, flashing, and troubleshooting
+├── DEPLOY.md   — how to get code onto the badge
 ├── hardware/   — KiCad design files, BOM, fabrication outputs
-└── software/   — MicroPython firmware
+├── software/   — CircuitPython badge firmware
+├── testing/    — CircuitPython hardware test fixtures
+└── uf2/        — prebuilt flash images and flashing helpers
 ```
 
+- [Deploy Guide →](DEPLOY.md) — bootloader mode, flashing a UF2, and which image to use
 - [Build Guide →](buildguide.md) — assembly, battery installation, flashing, and troubleshooting
 - [Hardware →](hardware/README.md) — schematics, PCB layout, drill files, BOM
 - [Software →](software/README.md) — firmware architecture, pinout, library requirements, flashing instructions
+- [Testing →](testing/README.md) — hardware self-test and accelerometer level test
 
 **Fabrication outputs**:
 - [PCB layer plot](hardware/output/mk9-badge.pdf)
@@ -87,14 +93,13 @@ mk9-badge/
 
 ## Programming / Updating
 
-The badge runs [CircuitPython](https://circuitpython.org). To update the firmware:
+Full instructions are in **[DEPLOY.md](DEPLOY.md)**. The gist:
 
-1. Hold **BOOTSEL** while plugging the badge into your computer — it mounts as `RPI-RP2`.
-2. Drag the CircuitPython `.uf2` onto the drive. It reboots as `CIRCUITPY`.
-3. Copy the `lib/` folder contents to `CIRCUITPY/lib/` (see [software/README.md](software/README.md) for the library list).
-4. Copy all `.py` files from `software/` to the root of `CIRCUITPY`.
+1. Hold **BOOT** while plugging the badge into your computer — it mounts as `RPI-RP2`.
+2. Drag a `.uf2` onto the drive. The drive disconnects partway through the copy; that's the chip rebooting, not a failure.
+3. For a CircuitPython image, a `CIRCUITPY` drive appears. Copy `lib/` contents and your `.py` files onto it.
 
-The badge restarts automatically. If it gets into a weird state, delete everything on `CIRCUITPY` and start fresh — it won't brick.
+Both files in [`uf2/`](uf2/) are complete flash images — `badge_test.uf2` is CircuitPython with the hardware tests and libraries already aboard, and `badge_firmware_1.0.uf2` is the MicroPython firmware the badge shipped with. Neither can brick it; if things get weird, delete everything on `CIRCUITPY` and start fresh.
 
 Want to run QMK instead? The hardware is fully compatible; QMK setup instructions will be posted separately.
 

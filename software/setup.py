@@ -6,7 +6,7 @@ import digitalio
 import global_tools
 
 # ---------------------------------------------------------------------------
-# NeoPixels — 15 LEDs on GP22
+# NeoPixels — 15 LEDs on GP21
 # LEDs 0-8:  key LEDs, row-major (left→right, top→bottom)
 #            key_number from KeyMatrix = row*3+col = LED index
 # LEDs 9-14: backlight LEDs, clockwise from top-right
@@ -16,7 +16,7 @@ NUM_KEY_LEDS = 9
 BACKLIGHT_START = 9
 
 pixels = neopixel.NeoPixel(
-    board.GP22,
+    board.GP21,
     NUM_PIXELS,
     brightness=global_tools.current_brightness,
     auto_write=False,
@@ -32,7 +32,9 @@ pixels = neopixel.NeoPixel(
 # ---------------------------------------------------------------------------
 row_pins = (board.GP27, board.GP26, board.GP16)
 col_pins = (board.GP17, board.GP13, board.GP0)
-keys = keypad.KeyMatrix(row_pins, col_pins, columns_to_anodes=False)
+# Each switch ties a column line to a row line through a Schottky diode whose
+# anode is on the column side, so columns_to_anodes stays True.
+keys = keypad.KeyMatrix(row_pins, col_pins, columns_to_anodes=True)
 
 # ---------------------------------------------------------------------------
 # Accelerometer — I2C1, SDA=GP18, SCL=GP19

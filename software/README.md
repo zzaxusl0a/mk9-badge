@@ -27,7 +27,7 @@ C0R2  C1R2  C2R2        key# 6  key# 7  key# 8
 | R1     | GP26 |
 | R2     | GP16 |
 
-### NeoPixel LEDs (15 total — GP22)
+### NeoPixel LEDs (15 total — GP21)
 
 **Key LEDs 0–8** sit beneath each key. `LED index == key_number`.
 
@@ -43,7 +43,8 @@ C0R2  C1R2  C2R2        key# 6  key# 7  key# 8
 | 14    | Top-left             |
 
 ### Accelerometer — I2C1
-Adafruit MSA301-compatible device.
+GoodArk **GSDA213**, which shares the MSA301 register map (part ID `0x13` at
+register `0x01`, address `0x26`), so `adafruit_msa3xx.MSA301` drives it.
 
 | Signal | GPIO |
 |--------|------|
