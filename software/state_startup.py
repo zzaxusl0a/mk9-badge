@@ -1,5 +1,5 @@
 import time
-from rainbowio import colorwheel
+from global_tools import wheel_rgb
 from setup import pixels, NUM_PIXELS, BACKLIGHT_START, BLE_UART_AVAILABLE
 from setup import keys
 from state import State
@@ -93,7 +93,7 @@ class StartupState(State):
             for p in range(min(self.phase + 1, _NUM_PHASES)):
                 age = self.phase - p
                 hue = (self.base_hue + p * 30) % 256
-                color = colorwheel(hue)
+                color = wheel_rgb(hue)
                 # Older diagonals fade gently
                 fade = max(0.35, 1.0 - age * 0.10)
                 faded = tuple(int(c * fade) for c in color)

@@ -11,6 +11,7 @@ There is no toolchain, no compiler, and nothing to install on the badge itself.
 | Run the hardware self-test | Flash [`uf2/badge_test.uf2`](uf2/badge_test.uf2) — the test is already on it |
 | Run the `software/` badge firmware | Flash plain CircuitPython, then copy `software/*.py` + `lib/` |
 | Put it back the way it shipped | Flash [`uf2/badge_firmware_1.0.uf2`](uf2/badge_firmware_1.0.uf2) |
+| Get the `CIRCUITPY` drive back on a HID-only badge | Hold the **bottom-left key** and tap RESET (`SW3`) — see [Getting the drive back](#getting-the-drive-back) |
 
 ---
 
@@ -117,16 +118,78 @@ This one needs a plain CircuitPython install plus a manual library copy.
    - `adafruit_bus_device/`
    - `adafruit_register/`
    - `adafruit_hid/` (including `keyboard_layout_us.mpy` and `keyboard_layout_base.mpy`)
-4. Copy every `.py` file from `software/` to the root of `CIRCUITPY`.
+4. Copy every `.py` file from `software/` to the root of `CIRCUITPY` — but hold
+   back `boot.py` until the rest is confirmed working, because `boot.py` is what
+   hides the drive.
 
    ```bash
    cp software/*.py /Volumes/CIRCUITPY/
+   rm /Volumes/CIRCUITPY/boot.py
    ```
 
-5. The badge restarts, runs `boot.py`, then `code.py`.
+   Copying then removing `boot.py` is the least fiddly way to do this, and it's
+   safe: `boot.py` has no effect until the next hard reset, so removing it before
+   then changes nothing.
 
-Nothing here can brick the badge. If it ends up in a strange state, delete
-everything on `CIRCUITPY` and start over, or hold BOOT and flash a fresh image.
+5. The badge restarts and runs `code.py`. Watch the LEDs do the startup sweep and
+   check a keypress types before continuing.
+6. Now copy `boot.py`.
+
+   ```bash
+   cp software/boot.py /Volumes/CIRCUITPY/
+   ```
+
+   **The drive will still be there.** Saving a file triggers auto-reload, which
+   re-runs `code.py` but *not* `boot.py`. Unplug and replug — the drive is gone
+   and the badge is a plain keyboard. That's the feature working, not a failure.
+
+### Getting the drive back
+
+`boot.py` hides the `CIRCUITPY` drive on every boot, so the badge enumerates as a
+**HID keyboard plus a USB serial port** and nothing else — no mass storage for a
+work machine's device policy to object to.
+
+To mount it again: **hold the bottom-left key and tap RESET (`SW3`)**, or hold
+that key while plugging in USB-C. Edit what you need, save, and the badge
+auto-reloads with your change live. Unplug and replug to return to HID-only.
+
+To edit `keymap.py` without ever exposing a drive, use the serial console
+instead — it stays available in HID-only mode:
+
+```bash
+screen /dev/tty.usbmodem* 115200
+```
+
+Then `Ctrl-C` to break into the REPL, `import storage; storage.remount("/", False)`
+to make the filesystem writable, rewrite the file, and `Ctrl-D` to reload.
+
+To change which key is the gate, edit `_GATE_KEY` in `boot.py` (0-8, row-major).
+To go back to a permanently visible drive, delete `boot.py` — but note that also
+turns off USB HID, so the badge stops typing over USB.
+
+### Recovery
+
+Nothing here can permanently brick the badge, but a hidden drive changes how you
+dig yourself out. Work down this list:
+
+| Situation | Way back in |
+|---|---|
+| Drive hidden, badge otherwise fine | Hold bottom-left + tap RESET |
+| Drive hidden, `code.py` crashed (dark LEDs, no typing) | Same gesture. `boot.py` runs before `code.py`, so the gate is unaffected by anything `code.py` does |
+| `boot.py` itself is broken | The drive is *enabled* — the gate fails safe. Read the traceback in `boot_out.txt` on the drive |
+| The gate won't read the key | Serial REPL: `Ctrl-C`, then `import storage; storage.remount("/", False)`, `import os; os.rename("boot.py", "boot.py.bak")`, `import microcontroller; microcontroller.reset()` |
+| Nothing above works | Hold BOOT (`SW1`) while plugging in → `RPI-RP2` → flash [`flash_nuke.uf2`](https://learn.adafruit.com/circuitpython-with-raspberry-pi-pico/troubleshooting), then re-flash CircuitPython |
+
+Two things worth knowing before you reach for the bootloader:
+
+- **Re-flashing the same CircuitPython UF2 preserves the filesystem**, so it will
+  boot you straight back into whatever `boot.py` you were trying to escape. Only
+  `flash_nuke.uf2` erases it — and that takes your `keymap.py` with it.
+- **Safe mode does not run `boot.py`** and comes up with the drive visible, but
+  it isn't a practical route on this badge: the Pico build's status LED is GP25,
+  which isn't wired here, so the timing cue for entering safe mode is invisible,
+  and a fast double-tap on RP2040 lands in the UF2 bootloader instead. A `boot.py`
+  exception doesn't trigger safe mode either — it prints and `code.py` runs anyway.
 
 ---
 

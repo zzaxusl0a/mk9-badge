@@ -2,7 +2,7 @@ import time
 import math
 import random
 import supervisor
-from rainbowio import colorwheel
+from global_tools import wheel_rgb
 from setup import pixels, NUM_PIXELS, BACKLIGHT_START, LED_POSITIONS
 from setup import keys, sensor, ACCEL_AVAILABLE
 from state import State
@@ -54,7 +54,7 @@ def _load_actions():
 _KEY_ACTIONS = _load_actions()
 
 # One vibrant colour per key, evenly spaced on the colour wheel
-_KEY_COLORS = [colorwheel(i * 28) for i in range(9)]
+_KEY_COLORS = [wheel_rgb(i * 28) for i in range(9)]
 
 # ---------------------------------------------------------------------------
 # Ripple parameters
@@ -63,10 +63,11 @@ _RIPPLE_SPEED  = 1.8   # grid units per second
 _RIPPLE_MAX_R  = 4.5   # radius at which a ripple disappears
 _RIPPLE_WIDTH  = 0.7   # wavefront half-thickness
 
-_NUM_PATTERNS  = 3
+_NUM_PATTERNS  = 4
 _FRAME_TIME    = 0.03  # ~33 fps target
 _SHAKE_THRESH  = 16.0  # m/s² total acceleration to trigger pattern change
 _SHAKE_COOLDOWN = 2.0  # seconds between shake-triggered pattern changes
+_SWEEP_DIM     = 0.25  # backlight-sweep brightness, as a fraction of full
 
 
 class _Ripple:
@@ -174,13 +175,13 @@ class BadgeState(State):
                 # Backlight LEDs get their own band offset
                 phase = (i - BACKLIGHT_START) * 40 + 128
             hue = int((phase + self.bg_offset + self.accel_hue_shift) % 256)
-            pixels[i] = colorwheel(hue)
+            pixels[i] = wheel_rgb(hue)
 
     def _bg_breathing(self, delta):
         self.bg_offset += delta * 1.8
         self.bg_hue = (self.bg_hue + int(delta * 15) + 1) % 256
         intensity = (math.sin(self.bg_offset) + 1.0) / 2.0
-        base = colorwheel((self.bg_hue + self.accel_hue_shift) % 256)
+        base = wheel_rgb((self.bg_hue + self.accel_hue_shift) % 256)
         color = tuple(int(c * intensity) for c in base)
         # Key LEDs breathe together; backlight LEDs breathe slightly offset
         for i in range(9):
@@ -202,10 +203,23 @@ class BadgeState(State):
             v = self.sparkle[i]
             if v > 0.005:
                 hue = (self.bg_hue + i * 19 + self.accel_hue_shift) % 256
-                c = colorwheel(hue)
+                c = wheel_rgb(hue)
                 pixels[i] = tuple(int(ch * v) for ch in c)
             else:
                 pixels[i] = (0, 0, 0)
+
+    def _bg_backlight_sweep(self, delta):
+        # Key LEDs stay dark; a dim rainbow travels around the backlight ring
+        for i in range(9):
+            pixels[i] = (0, 0, 0)
+        self.bg_offset = (self.bg_offset + delta * 45) % 256
+        ring = NUM_PIXELS - BACKLIGHT_START
+        for i in range(BACKLIGHT_START, NUM_PIXELS):
+            # One full turn of the colour wheel spread around the ring
+            phase = (i - BACKLIGHT_START) * (256 // ring)
+            hue = int((phase + self.bg_offset + self.accel_hue_shift) % 256)
+            r, g, b = wheel_rgb(hue)
+            pixels[i] = (int(r * _SWEEP_DIM), int(g * _SWEEP_DIM), int(b * _SWEEP_DIM))
 
     # ------------------------------------------------------------------
     # Ripple overlay (additive blend on top of background)
@@ -269,6 +283,8 @@ class BadgeState(State):
             self._bg_breathing(delta)
         elif self.pattern == 2:
             self._bg_sparkle(delta)
+        elif self.pattern == 3:
+            self._bg_backlight_sweep(delta)
 
         # Overlay ripples
         self._apply_ripples()

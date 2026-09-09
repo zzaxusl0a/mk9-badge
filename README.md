@@ -64,6 +64,10 @@ Once running:
 - Tilt the badge to shift the colour palette; shake it to switch patterns
 - Plug into a computer and it shows up as a numpad (7–9 / 4–6 / 1–3 layout)
 
+It presents as a **keyboard only** — no USB drive, by design, so it works on
+machines whose policy blocks USB mass storage. To mount the `CIRCUITPY` drive and
+edit files, hold the bottom-left key and tap RESET; details in [DEPLOY.md](DEPLOY.md#getting-the-drive-back).
+
 ---
 
 ## Repository
@@ -97,9 +101,9 @@ Full instructions are in **[DEPLOY.md](DEPLOY.md)**. The gist:
 
 1. Hold **BOOT** while plugging the badge into your computer — it mounts as `RPI-RP2`.
 2. Drag a `.uf2` onto the drive. The drive disconnects partway through the copy; that's the chip rebooting, not a failure.
-3. For a CircuitPython image, a `CIRCUITPY` drive appears. Copy `lib/` contents and your `.py` files onto it.
+3. For a CircuitPython image, a `CIRCUITPY` drive appears. Copy `lib/` contents and your `.py` files onto it — `boot.py` last, since it's what hides the drive on subsequent boots.
 
-Both files in [`uf2/`](uf2/) are complete flash images — `badge_test.uf2` is CircuitPython with the hardware tests and libraries already aboard, and `badge_firmware_1.0.uf2` is the MicroPython firmware the badge shipped with. Neither can brick it; if things get weird, delete everything on `CIRCUITPY` and start fresh.
+Both files in [`uf2/`](uf2/) are complete flash images — `badge_test.uf2` is CircuitPython with the hardware tests and libraries already aboard, and `badge_firmware_1.0.uf2` is the MicroPython firmware the badge shipped with. Neither can brick it. If things get weird and you can still see the drive, delete everything on `CIRCUITPY` and start fresh; if the drive is hidden, see [Recovery](DEPLOY.md#recovery).
 
 Want to run QMK instead? The hardware is fully compatible; QMK setup instructions will be posted separately.
 

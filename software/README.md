@@ -80,7 +80,7 @@ register `0x01`, address `0x26`), so `adafruit_msa3xx.MSA301` drives it.
 
 ```
 software/
-├── boot.py          — Runs before code.py; enables USB HID keyboard
+├── boot.py          — Runs before code.py; enables USB HID, hides the drive
 ├── code.py          — Entry point; creates and runs the state machine
 ├── state.py         — Base State and StateMachine classes
 ├── setup.py         — Hardware init (pixels, keymatrix, I2C, accel, BLE UART)
@@ -185,21 +185,48 @@ Bluetooth path uses raw AT commands and needs no extra library.
 1. Hold BOOTSEL while plugging in the RP2040 — it mounts as `RPI-RP2`.
 2. Drag the CircuitPython UF2 onto the drive. It reboots as `CIRCUITPY`.
 3. Copy the `lib/` folder contents to `CIRCUITPY/lib/`.
-4. Copy all `*.py` files from this directory to the root of `CIRCUITPY`.
-5. The badge will restart and run `boot.py` then `code.py` automatically.
+4. Copy all `*.py` files *except* `boot.py` from this directory to the root of
+   `CIRCUITPY`, and confirm the badge animates and types.
+5. Copy `boot.py` last, then unplug and replug.
 
-> **Note:** `boot.py` enables USB HID. After the first boot with `boot.py` present the drive will still appear as mass storage — both HID and storage are active simultaneously.
+> **Note:** `boot.py` is the only place USB can be reconfigured — descriptors are
+> frozen once the host enumerates the badge. It enables the HID keyboard and then
+> hides the `CIRCUITPY` drive, so the badge presents as a **keyboard plus a USB
+> serial port** and nothing else. Copying `boot.py` won't hide the drive
+> immediately: saving a file triggers auto-reload, which re-runs `code.py` but not
+> `boot.py`. It takes effect on the next hard reset.
+
+### Getting the drive back
+
+**Hold the bottom-left key and tap RESET (`SW3`)**, or hold it while plugging in
+USB-C. A hard reset re-runs `boot.py`, which sees the held key and leaves mass
+storage enabled. Edit, save, and the badge auto-reloads with your change live;
+unplug and replug to return to HID-only.
+
+The serial console stays available in HID-only mode (`usb_cdc.console` is a
+separate USB interface from mass storage), so `screen /dev/tty.usbmodem* 115200`
+works either way — for reading tracebacks, and as the recovery path if the gate
+ever misreads. `boot.py` prints which mode it chose to both the console and
+`boot_out.txt`.
+
+The gate reads the matrix directly with `digitalio` rather than through `keypad`,
+and every failure path leaves the drive **enabled** — a broken `boot.py` can't
+lock you out. Change `_GATE_KEY` in `boot.py` (0-8, row-major) to use a different
+key. See [DEPLOY.md](../DEPLOY.md#recovery) for the full recovery ladder.
 
 ---
 
 ## Extending / Customising
 
 - **Add a new background pattern** — add a `_bg_yourpattern()` method to `BadgeState`, increment `_NUM_PATTERNS`, and add an `elif` branch in `update()`.
-- **Remap keys / add macros** — edit **`keymap.py`** on the CIRCUITPY drive. Each
-  of the 9 entries is `{"key": "NAME"}` (held key), `{"text": "..."}` (typed
-  string), `{"combo": "CTRL-C"}` (chord), or a bare string (shorthand for text).
+- **Remap keys / add macros** — mount the drive first (hold bottom-left, tap
+  RESET), then edit **`keymap.py`** on it. Each of the 9 entries is
+  `{"key": "NAME"}` (held key), `{"text": "..."}` (typed string),
+  `{"combo": "CTRL-C"}` (chord), or a bare string (shorthand for text).
   Save and the badge auto-reloads; no reflash. A bad entry falls back to the
-  default numpad and logs to the serial console.
+  default numpad and logs to the serial console. On a machine where you'd rather
+  not mount a drive at all, edit it over the REPL instead — `Ctrl-C`, then
+  `import storage; storage.remount("/", False)`.
 - **Change key colours** — edit `_KEY_COLORS` in `state_badge.py`.
 - **Add an SAO** — use `i2c_sao` (already initialised) and the `sao*_gpio*` pins from `setup.py`.
 - **Add a new state** — subclass `State`, implement `name`, `enter`, `exit`, `update`; register it with `machine.add_state()` in `code.py`.

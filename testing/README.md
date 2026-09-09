@@ -3,6 +3,10 @@
 Self-contained hardware test fixtures for the MK9 badge. Copy the one you want to
 the root of `CIRCUITPY` as `code.py` (replacing the production firmware).
 
+If the badge is running the `software/` firmware, the `CIRCUITPY` drive is hidden
+by default — hold the bottom-left key and tap RESET (`SW3`) to mount it. See
+[Getting the drive back](../DEPLOY.md#getting-the-drive-back).
+
 | File | What it does |
 |------|--------------|
 | `code.py` | Full fixture — LEDs, key matrix, and accelerometer at once |
@@ -126,4 +130,4 @@ If the accelerometer library is missing or the sensor doesn't respond, the teste
 
 ## Restoring Production Firmware
 
-After testing, copy all files from `software/` back to the root of `CIRCUITPY` (including `boot.py`).
+After testing, copy all files from `software/` back to the root of `CIRCUITPY` — everything except `boot.py` first, then `boot.py` last. `boot.py` hides the `CIRCUITPY` drive from the next hard reset onward, so copy it once the rest is in place. To get the drive back afterwards, hold the bottom-left key and tap RESET (`SW3`).
