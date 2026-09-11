@@ -178,13 +178,15 @@ dig yourself out. Work down this list:
 | Drive hidden, `code.py` crashed (dark LEDs, no typing) | Same gesture. `boot.py` runs before `code.py`, so the gate is unaffected by anything `code.py` does |
 | `boot.py` itself is broken | The drive is *enabled* — the gate fails safe. Read the traceback in `boot_out.txt` on the drive |
 | The gate won't read the key | Serial REPL: `Ctrl-C`, then `import storage; storage.remount("/", False)`, `import os; os.rename("boot.py", "boot.py.bak")`, `import microcontroller; microcontroller.reset()` |
+| Drive visible but every write fails "media is write protected", while the host's own volume flags say it isn't read-only | The FAT is damaged — unclean unplugs do this. Confirm from the REPL: `import storage; storage.getmount("/").readonly` returning `True` is *normal*, so if the host still can't write, the filesystem is the problem. Copy anything you need off (reading still works), then `import storage; storage.erase_filesystem()` |
 | Nothing above works | Hold BOOT (`SW1`) while plugging in → `RPI-RP2` → flash [`flash_nuke.uf2`](https://learn.adafruit.com/circuitpython-with-raspberry-pi-pico/troubleshooting), then re-flash CircuitPython |
 
 Two things worth knowing before you reach for the bootloader:
 
 - **Re-flashing the same CircuitPython UF2 preserves the filesystem**, so it will
-  boot you straight back into whatever `boot.py` you were trying to escape. Only
-  `flash_nuke.uf2` erases it — and that takes your `keymap.py` with it.
+  boot you straight back into whatever `boot.py` you were trying to escape — and
+  it won't repair a damaged FAT either. Only `storage.erase_filesystem()` or
+  `flash_nuke.uf2` rebuild it, and both take your `keymap.py` with them.
 - **Safe mode does not run `boot.py`** and comes up with the drive visible, but
   it isn't a practical route on this badge: the Pico build's status LED is GP25,
   which isn't wired here, so the timing cue for entering safe mode is invisible,
